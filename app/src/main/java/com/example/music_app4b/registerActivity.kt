@@ -86,6 +86,7 @@ class registerActivity : AppCompatActivity() {
             finish()
 
             //PRUEBA DE GIT LOL
+            //prueba de git xddd
 
         }else{
             Toast.makeText(this, "Error al registrar", Toast.LENGTH_SHORT).show()
