@@ -84,6 +84,9 @@ class registerActivity : AppCompatActivity() {
             Toast.makeText(this, "Registro exitoso", Toast.LENGTH_SHORT).show()
             //cierra la panatlla actual y regresa a la anterios
             finish()
+
+            //PRUEBA DE GIT LOL
+
         }else{
             Toast.makeText(this, "Error al registrar", Toast.LENGTH_SHORT).show()
         }
