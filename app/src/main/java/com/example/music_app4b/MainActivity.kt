@@ -35,6 +35,7 @@ class MainActivity : AppCompatActivity() {
         //Evento para iniciar sesion
         btnIngresar.setOnClickListener {
             //Llamar metodo para iniciar sesion
+            iniciarSesion()
         }
 
         tvCrearCuenta.setOnClickListener {
