@@ -2,6 +2,7 @@ package com.example.music_app4b
 
 import android.os.Bundle
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -9,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.bumptech.glide.Glide
+import com.example.music_app4b.model.Album
 import com.example.music_app4b.model.iTunesResponse
 import com.example.music_app4b.network.RetrofitClient
 import retrofit2.Call
@@ -18,7 +20,7 @@ import retrofit2.Response
 class HomeActivity : AppCompatActivity() {
 
     private lateinit var  tvResultado : TextView
-    private lateinit var imgAlbum : ImageView
+    private lateinit var contenedorIndie : LinearLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,7 +29,7 @@ class HomeActivity : AppCompatActivity() {
 
 
         tvResultado = findViewById(R.id.tvResultado)
-        imgAlbum = findViewById(R.id.imgAlbum)
+        contenedorIndie = findViewById(R.id.contenedorIndie)
 
         //TODO: Agregar metodo de llamado de album
         obtenerAlbum()
@@ -81,5 +83,40 @@ class HomeActivity : AppCompatActivity() {
 
         })
 
+    }
+
+    //METODO PARA MOSTRAR EL LISTADO DE DATOS DE UN API
+    private fun mostrarAlbumes(albumes: List<Album>){
+
+        //OBLIGATORIO: Evitar elementos duplicados
+        contenedorIndie.removeAllViews()
+
+        //Ciclo para recorrer las multiples peticiones a un API
+        for (album in albumes){
+
+            //Usar el LinearLayout con el contenedor
+            val vistaAlbum = layoutInflater.inflate(
+                R.layout.item_album,
+                contenedorIndie,
+                false
+            )
+
+            val imgPortada = vistaAlbum.findViewById<ImageView>(R.id.imgPortadaAlbum)
+            val tvNombreAlbum = vistaAlbum.findViewById<TextView>(R.id.tvNombreAlbum)
+            val tvNombrertista = vistaAlbum.findViewById<TextView>(R.id.tvNombreArtista)
+
+            // Asignando los nombres obtenidos del album del API
+            tvNombreAlbum.text = album.collectionName ?: "Album sin nombre"
+            tvNombrertista.text = album.artistName ?: "Artista desconocido"
+
+            // Mostrar la imagen del album
+            Glide.with(this@HomeActivity)
+                .load(album.obtenerImagenGrande())
+                .into(imgPortada)
+
+            //Asignar la vista del contenedor a las tarjetas de albumes
+
+
+        }
     }
 }
