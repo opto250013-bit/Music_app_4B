@@ -46,30 +46,20 @@ class HomeActivity : AppCompatActivity() {
             pais = "mx",
             media = "music",
             entidad = "album",
-            limite = 1
+            limite = 10
         ).enqueue(object : Callback<iTunesResponse> {
 
             //METODO EN CASO DE QUE LA RESPUESTA SEA CORRECTA
             override fun onResponse(call: Call<iTunesResponse?>, response: Response<iTunesResponse?>) {
 
                 //Variable para guardar el numero de albumes consultados
-                val albumes = response.body()?.results
+                //Variable para que guarde una lista de tipo Album
+                val albumes = response.body()?.results ?: emptyList()
 
                 //Validar si la variable albumes tiene informacion
                 if(!albumes.isNullOrEmpty()){
 
-                    //Variable ara acceder al primer elemento de los albumes encontrados
-                    val album = albumes[0]
-
-                    tvResultado.text =
-                        "Album: ${ album.collectionName } \n\n" +
-                        "Artista: ${ album.artistName } \n\n" +
-                        "Numero de canciones: ${ album.trackCount } \n\n"
-
-                    // Mostrar la imagen del album
-                    Glide.with(this@HomeActivity)
-                        .load(album.obtenerImagenGrande())
-                        .into(imgAlbum)
+                    mostrarAlbumes(albumes)
 
                 }else{
                     Toast.makeText(this@HomeActivity, "No hay respuesta del API", Toast.LENGTH_SHORT).show()
@@ -115,6 +105,7 @@ class HomeActivity : AppCompatActivity() {
                 .into(imgPortada)
 
             //Asignar la vista del contenedor a las tarjetas de albumes
+            contenedorIndie.addView(vistaAlbum)
 
 
         }
