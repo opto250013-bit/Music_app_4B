@@ -114,9 +114,8 @@ class HomeActivity : AppCompatActivity() {
                 .load(album.obtenerImagenGrande())
                 .into(imgPortada)
 
-            //Asignar la vista del contenedor a las tarjetas de albumes
-            contenedor.addView(vistaAlbum)
 
+            //EVENTO
             vistaAlbum.setOnClickListener {
 
                 //Necesitamos obtener el ID
@@ -138,6 +137,9 @@ class HomeActivity : AppCompatActivity() {
                     startActivity(intent)
                 }
             }
+
+            //Asignar la vista del contenedor a las tarjetas de albumes
+            contenedor.addView(vistaAlbum)
         }
     }
 }
