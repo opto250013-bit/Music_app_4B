@@ -62,8 +62,10 @@ class DetailsActivity : AppCompatActivity() {
             albumFavorito = !albumFavorito
 
             if (albumFavorito){
+                btnFavorito.setImageResource(R.drawable.favorito)
                 Toast.makeText(this, "Album $nombreAlbum agregado a favoritos", Toast.LENGTH_SHORT).show()
             }else{
+                btnFavorito.setImageResource(R.drawable.no_favorito)
                 Toast.makeText(this, "Album $nombreAlbum eliminado de favoritos", Toast.LENGTH_SHORT).show()
             }
 
