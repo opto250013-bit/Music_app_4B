@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!--COLOCAR PERMISOS DE LA APLICACION-->
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <!-- COLOCAR PERMISOS DE LA APLICACION -->
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -29,6 +29,18 @@
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".HomeActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".DetailsActivity2"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".network.DetailsActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".DetailsActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
     </application>

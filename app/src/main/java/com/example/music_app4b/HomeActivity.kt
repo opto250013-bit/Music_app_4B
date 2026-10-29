@@ -1,6 +1,8 @@
 package com.example.music_app4b
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -21,6 +23,8 @@ class HomeActivity : AppCompatActivity() {
 
     private lateinit var  tvResultado : TextView
     private lateinit var contenedorIndie : LinearLayout
+    private lateinit var contenedorRock : LinearLayout
+    private lateinit var contenedorArtista : LinearLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,19 +34,24 @@ class HomeActivity : AppCompatActivity() {
 
         tvResultado = findViewById(R.id.tvResultado)
         contenedorIndie = findViewById(R.id.contenedorIndie)
+        contenedorRock = findViewById(R.id.contenedorRock)
+        contenedorArtista = findViewById(R.id.contenedorArtista)
+
 
         //TODO: Agregar metodo de llamado de album
-        obtenerAlbum()
+        obtenerAlbum("Indie", contenedorIndie)
+        obtenerAlbum("Rock", contenedorRock)
+        obtenerAlbum("te vi en un planetario", contenedorArtista)
 
 
     }
 
     //METODO PARA OBTENER INFORMACION DEL ALBUM
-    private fun obtenerAlbum(){
+    private fun obtenerAlbum(genero : String, contenedor : LinearLayout){
 
         // Hacer el llamado
         RetrofitClient.api.obtenerAlbumGenero(
-            genero = "Estamos Perdidos",
+            genero = genero,
             pais = "mx",
             media = "music",
             entidad = "album",
@@ -59,7 +68,8 @@ class HomeActivity : AppCompatActivity() {
                 //Validar si la variable albumes tiene informacion
                 if(!albumes.isNullOrEmpty()){
 
-                    mostrarAlbumes(albumes)
+                    tvResultado.visibility = View.GONE
+                    mostrarAlbumes(albumes, contenedor)
 
                 }else{
                     Toast.makeText(this@HomeActivity, "No hay respuesta del API", Toast.LENGTH_SHORT).show()
@@ -76,10 +86,10 @@ class HomeActivity : AppCompatActivity() {
     }
 
     //METODO PARA MOSTRAR EL LISTADO DE DATOS DE UN API
-    private fun mostrarAlbumes(albumes: List<Album>){
+    private fun mostrarAlbumes(albumes: List<Album>, contenedor: LinearLayout){
 
         //OBLIGATORIO: Evitar elementos duplicados
-        contenedorIndie.removeAllViews()
+        contenedor.removeAllViews()
 
         //Ciclo para recorrer las multiples peticiones a un API
         for (album in albumes){
@@ -87,7 +97,7 @@ class HomeActivity : AppCompatActivity() {
             //Usar el LinearLayout con el contenedor
             val vistaAlbum = layoutInflater.inflate(
                 R.layout.item_album,
-                contenedorIndie,
+                contenedor,
                 false
             )
 
@@ -105,9 +115,29 @@ class HomeActivity : AppCompatActivity() {
                 .into(imgPortada)
 
             //Asignar la vista del contenedor a las tarjetas de albumes
-            contenedorIndie.addView(vistaAlbum)
+            contenedor.addView(vistaAlbum)
 
+            vistaAlbum.setOnClickListener {
 
+                //Necesitamos obtener el ID
+                val idAlbum = album.collectionId
+
+                //Validacion para saber que se cuenta con ID
+                if(idAlbum != null){
+
+                    val intent = Intent(this@HomeActivity, DetailsActivity::class.java)
+
+                    //Enviar datos
+                    intent.putExtra("ID_ALBUM", idAlbum)
+                    intent.putExtra("NOMBRE_ALBUM", album.collectionName)
+                    intent.putExtra("ARTISTA_ALBUM", album.artistName)
+                    intent.putExtra("GENERO_ALBUM", album.primaryGenreName)
+                    intent.putExtra("CANCIONES_ALBUM", album.trackCount)
+                    intent.putExtra("IMAGEN_ALBUM", album.obtenerImagenGrande())
+
+                    startActivity(intent)
+                }
+            }
         }
     }
 }

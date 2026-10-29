@@ -28,6 +28,6 @@ data class Album(
 ) {
     //METODO PARA OBTENER LA IMAGEN MAS GRANDE
     fun obtenerImagenGrande() : String{
-        return artworkUrl100?.replace("100x100.jpg", "600x600.jpg") ?: ""
+        return artworkUrl100?.replace("100x100bb.jpg", "600x600bb.jpg") ?: ""
     }
 }
