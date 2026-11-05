@@ -37,25 +37,39 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(
         private const val COL_FECHA = "fecha"
         private const val COL_IMAGEN = "imagen"
 
-    }
-
-    //Metodo oncreate - crear la bd
-    override fun onCreate(db: SQLiteDatabase?) {
-        //crear la tabla
-        val crearTablaUsuarios = """
+        //CREAR AMBAS TABLAS DE LA BASE DE DATOS
+        private const val CREATE_TABLE_USUARIOS = """
             CREATE TABLE $TABLE_USUARIOS(
-            $COL_ID INTEGER PRIMARY KEY AUTOINCREMENT,
-            $COL_NOMBRE TEXT NOT NULL,
-            $COL_CORREO TEXT NOT NULL,
-            $COL_PASSWORD TEXT NOT NULL
+                $COL_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+                $COL_NOMBRE TEXT NOT NULL,
+                $COL_CORREO TEXT NOT NULL,
+                $COL_PASSWORD TEXT NOT NULL
             )
-        """.trimIndent()
+        """
 
-        //crear tabla de usuarios
-        db?.execSQL(crearTablaUsuarios)
+        private const val CREATE_TABLE_FAVORITOS = """
+            CREATE TABLE $TABLE_FAVORITOS(
+                $COL_ID_FAVORIO INTEGER PRIMARY KEY AUTOINCREMENT,
+                $COL_ALBUM_ID INTEGER UNIQUE NOT NULL,
+                $COL_NOMBRE_ALBUM TEXT NOT NULL,
+                $COL_ARTISTA TEXT,
+                $COL_GENERO TEXT,
+                $COL_CANCIONES INTEGER,
+                $COL_FECHA TEXT,
+                $COL_IMAGEN TEXT
+            )
+        """
     }
 
-    //Metodo onupgrade - actualizar la bd
+    //Metodo onCreate - crear la bd
+    override fun onCreate(db: SQLiteDatabase?) {
+
+        //Crear tablas para la aplicacion
+        db?.execSQL(CREATE_TABLE_USUARIOS)
+        db?.execSQL(CREATE_TABLE_FAVORITOS)
+    }
+
+    //Metodo onUpgrade - actualizar la bd
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
         db?.execSQL("DROP TABLE IF EXISTS $TABLE_USUARIOS")
         onCreate(db)
@@ -111,4 +125,24 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(
         return  usuarioEncontrado
     }
 
+    //METODO PARA GUARDA LA INFORMACION DEL API
+    fun guardarAlbumFavoritos(albumId : Long, nombreAlbum : String, artista : String, genero : String, canciones : Int, fecha : String, imagen : String) : Boolean {
+
+        val db = writableDatabase
+
+        //Crear una variale para pasar los valores del API
+        val valores = ContentValues().apply {
+
+            put(COL_ALBUM_ID, albumId)
+            put(COL_NOMBRE_ALBUM, nombreAlbum)
+            put(COL_ARTISTA, artista)
+            put(COL_GENERO, genero)
+            put(COL_CANCIONES, canciones)
+            put(COL_FECHA, fecha)
+            put(COL_IMAGEN, imagen)
+
+
+        }
+
+    }
 }
