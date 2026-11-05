@@ -141,8 +141,16 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(
             put(COL_FECHA, fecha)
             put(COL_IMAGEN, imagen)
 
-
         }
+
+        val resultado = db.insertWithOnConflict(
+            TABLE_FAVORITOS,
+            null,
+            valores,
+            SQLiteDatabase.CONFLICT_IGNORE
+        )
+
+        return resultado != -1L
 
     }
 }
