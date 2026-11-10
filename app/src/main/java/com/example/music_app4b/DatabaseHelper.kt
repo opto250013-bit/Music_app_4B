@@ -153,4 +153,38 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(
         return resultado != -1L
 
     }
+
+    //METODO PARA ELIMINAR EL ALBUM DE FAVORITOS
+    fun eliminarAlbumFavorito(albumId : Long) : Boolean {
+
+        val db = writableDatabase
+
+        val filas_afectadas = db.delete(
+            TABLE_FAVORITOS,
+            "$COL_ALBUM_ID = ?",
+            arrayOf(albumId.toString())
+        )
+
+        return filas_afectadas > 0
+
+    }
+
+    //METODO PARA VERIFICAR SI UN ALBUM ESTA REGISTRADO
+    fun existeAlbumFavorito(albumId : Long) : Boolean {
+
+        val db = readableDatabase
+
+        val cursor = db.rawQuery(
+            "SELECT $COL_ALBUM_ID FROM $TABLE_FAVORITOS WHERE $COL_ALBUM_ID = ?",
+            arrayOf(albumId.toString())
+        )
+
+        //Verificar si existe el registro
+        val existe = cursor.moveToFirst()
+
+        cursor.close()
+
+        return existe
+
+    }
 }
