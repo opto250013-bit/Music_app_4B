@@ -132,6 +132,7 @@ class HomeActivity : AppCompatActivity() {
                     intent.putExtra("ARTISTA_ALBUM", album.artistName)
                     intent.putExtra("GENERO_ALBUM", album.primaryGenreName)
                     intent.putExtra("CANCIONES_ALBUM", album.trackCount)
+                    intent.putExtra("FECHA_ALBUM", album.releaseDate)
                     intent.putExtra("IMAGEN_ALBUM", album.obtenerImagenGrande())
 
                     startActivity(intent)

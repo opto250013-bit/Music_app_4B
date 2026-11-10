@@ -71,8 +71,13 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(
 
     //Metodo onUpgrade - actualizar la bd
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
-        db?.execSQL("DROP TABLE IF EXISTS $TABLE_USUARIOS")
-        onCreate(db)
+
+
+        //Verificar la version de la BD para evitar borrar los datos
+        if(oldVersion < 3){
+            db?.execSQL(CREATE_TABLE_FAVORITOS)
+        }
+
     }
 
     //Metodo para crear un usuario
