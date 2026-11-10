@@ -39,6 +39,7 @@ class HomeActivity : AppCompatActivity() {
         contenedorRock = findViewById(R.id.contenedorRock)
         contenedorArtista = findViewById(R.id.contenedorArtista)
 
+        menuNavegacion()
 
         //TODO: Agregar metodo de llamado de album
         obtenerAlbum("Indie", contenedorIndie)
