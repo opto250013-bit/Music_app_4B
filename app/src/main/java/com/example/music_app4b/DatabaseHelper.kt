@@ -27,7 +27,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(
         private const val COL_PASSWORD = "password"
 
         //Informacion de la tabla de favoritos
-        private const val TABLE_FAVORITOS = "favorits"
+        private const val TABLE_FAVORITOS = "favorito"
         private const val COL_ID_FAVORIO = "id"
         private const val COL_ALBUM_ID = "album_id"
         private const val COL_NOMBRE_ALBUM = "nombre_album"

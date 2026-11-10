@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide
 import com.example.music_app4b.model.Album
 import com.example.music_app4b.model.iTunesResponse
 import com.example.music_app4b.network.RetrofitClient
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -25,13 +26,14 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var contenedorIndie : LinearLayout
     private lateinit var contenedorRock : LinearLayout
     private lateinit var contenedorArtista : LinearLayout
+    private lateinit var bottomNavigation : BottomNavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_home)
 
-
+        bottomNavigation = findViewById(R.id.bottomNavigation)
         tvResultado = findViewById(R.id.tvResultado)
         contenedorIndie = findViewById(R.id.contenedorIndie)
         contenedorRock = findViewById(R.id.contenedorRock)
@@ -43,7 +45,11 @@ class HomeActivity : AppCompatActivity() {
         obtenerAlbum("Rock", contenedorRock)
         obtenerAlbum("te vi en un planetario", contenedorArtista)
 
-
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, 0)
+            insets
+        }
     }
 
     //METODO PARA OBTENER INFORMACION DEL ALBUM
@@ -141,6 +147,33 @@ class HomeActivity : AppCompatActivity() {
 
             //Asignar la vista del contenedor a las tarjetas de albumes
             contenedor.addView(vistaAlbum)
+        }
+
+    }
+
+    //METODO PARA EL FUNCIONAMIENTO DEL MENU
+    private fun menuNavegacion(){
+
+        //Verificar la opcion seleccionada del menu
+        bottomNavigation.selectedItemId = R.id.nav_inicio
+
+        bottomNavigation.setOnItemSelectedListener { item ->
+
+            when(item.itemId){
+
+                R.id.nav_inicio -> {
+                    true
+                }
+
+                R.id.nav_favoritos -> {
+                    val intent = Intent(this, FavoritesActivity::class.java)
+                    startActivity(intent)
+                    true
+                }
+
+                else -> false
+            }
+
         }
     }
 }
