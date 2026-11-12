@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "96883173896",
+    "project_id": "prueba-sue-musicapp4b",
+    "storage_bucket": "prueba-sue-musicapp4b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:96883173896:android:9271246c7f11c5d73c3fbd",
+        "android_client_info": {
+          "package_name": "com.example.music_app4b"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "96883173896-k1qh5mvkl2jrd6uk52epnjrb0ov0f7j3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.music_app4b",
+            "certificate_hash": "08b421f024dc8ada1140093c6c31cef6463ac5c3"
+          }
+        },
+        {
+          "client_id": "96883173896-9penckv5s4qsri6k86jh450as6ltvtaj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBERqp3YMxhRWK3ZHnvFn0koNA57CkcgTo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "96883173896-9penckv5s4qsri6k86jh450as6ltvtaj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
