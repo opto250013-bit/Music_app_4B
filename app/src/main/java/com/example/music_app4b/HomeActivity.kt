@@ -52,7 +52,7 @@ class HomeActivity : AppCompatActivity() {
             insets
         }
     }
-
+//
     //METODO PARA OBTENER INFORMACION DEL ALBUM
     private fun obtenerAlbum(genero : String, contenedor : LinearLayout){
 
