@@ -4,6 +4,8 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import com.example.music_app4b.model.Album
+import com.example.music_app4b.model.albumFvorito
 
 //crear clase DatabaseHeler que hereda de la clase SQLite
 class DatabaseHelper(context: Context) : SQLiteOpenHelper(
@@ -190,6 +192,21 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(
         cursor.close()
 
         return existe
+
+    }
+
+    fun obtenerAlbumesFavoritos(): List<albumFvorito>{
+        val listaFavoritos = mutableListOf<albumFvorito>()
+        val db = readableDatabase
+
+        val query_sql = """
+            SELECT
+            *
+            FROM $TABLE_FAVORITOS
+            ORDER BY $COL_ID_FAVORIO DESC
+        """.trimIndent()
+
+        val cursor = db.rawQuery(query_sql, null)
 
     }
 }
