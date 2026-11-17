@@ -201,12 +201,37 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(
 
         val query_sql = """
             SELECT
-            *
+            $COL_ALBUM_ID,
+            $COL_NOMBRE_ALBUM,
+            $COL_ARTISTA,
+            $COL_GENERO,
+            $COL_CANCIONES,
+            $COL_FECHA,
+            $COL_IMAGEN
             FROM $TABLE_FAVORITOS
             ORDER BY $COL_ID_FAVORIO DESC
         """.trimIndent()
 
         val cursor = db.rawQuery(query_sql, null)
 
+        if(cursor.moveToFirst()){
+
+            //Ciclo que permite recorrer toda la consulta a la tabla y guardar en la lista mutalble
+            do {
+                val album = albumFvorito(
+                    albumId = cursor.getLong(0),
+                    nombreAlbum = cursor.getString(1)?: "Album Desconocido",
+                    artista = cursor.getString(2)?: "Artista Desconocido",
+                    genero = cursor.getString(3)?: "Genero Desconocido",
+                    canciones = cursor.getInt(4),
+                    fecha = cursor.getString(5)?: "",
+                    imagen = cursor.getString(6)?: ""
+                )
+                listaFavoritos.add(album)
+            }while (cursor.moveToNext())
+
+            cursor.close()
+            return  listaFavoritos
+        }
     }
 }
