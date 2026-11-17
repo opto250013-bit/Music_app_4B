@@ -10,4 +10,6 @@
         android:icon="@drawable/favorito"
         android:title="Favoritos"/>
 
+    <item android:id="@+id/nav_salir"
+        android:icon="@drawable/salir"/>
 </menu>

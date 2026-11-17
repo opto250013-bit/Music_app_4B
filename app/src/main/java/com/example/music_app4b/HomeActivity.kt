@@ -11,11 +11,17 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.credentials.ClearCredentialStateRequest
+import androidx.credentials.CredentialManager
+import androidx.credentials.CustomCredential
+import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.example.music_app4b.model.Album
 import com.example.music_app4b.model.iTunesResponse
 import com.example.music_app4b.network.RetrofitClient
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -27,6 +33,8 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var contenedorRock : LinearLayout
     private lateinit var contenedorArtista : LinearLayout
     private lateinit var bottomNavigation : BottomNavigationView
+    private lateinit var auth : FirebaseAuth
+    private lateinit var credentialManager: CredentialManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +46,9 @@ class HomeActivity : AppCompatActivity() {
         contenedorIndie = findViewById(R.id.contenedorIndie)
         contenedorRock = findViewById(R.id.contenedorRock)
         contenedorArtista = findViewById(R.id.contenedorArtista)
+
+        auth = FirebaseAuth.getInstance()
+        credentialManager = CredentialManager.create(this)
 
         menuNavegacion()
 
@@ -175,6 +186,25 @@ class HomeActivity : AppCompatActivity() {
                 else -> false
             }
 
+        }
+
+    }
+
+    //METODO PARA CERRAR SESION
+    private fun cerrarSesionGoogle(){
+        auth.signOut()
+
+        lifecycleScope.launch {
+
+            try {
+
+                credentialManager.clearCredentialState(
+                    ClearCredentialStateRequest()
+                )
+
+            } catch (e : Exception){
+
+            }
         }
     }
 }

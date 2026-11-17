@@ -191,4 +191,21 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+
+    //METODO PARA DEJAR LA SESION ACTIVA
+    override fun onStart() {
+        super.onStart()
+
+        //Variable que guarda rel estado del usuario actual
+        val usuarioActual = auth.currentUser
+
+        //Validar que la informacion del usuari este activa
+        if (usuarioActual != null){
+            val intent = Intent(this, HomeActivity::class.java)
+
+            startActivity(intent)
+            finish()
+        }
+    }
+
 }
