@@ -22,6 +22,7 @@ import com.example.music_app4b.network.RetrofitClient
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
+import kotlinx.serialization.descriptors.PrimitiveKind
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -183,6 +184,11 @@ class HomeActivity : AppCompatActivity() {
                     true
                 }
 
+                R.id.nav_salir ->{
+                    cerrarSesionGoogle()
+                    true
+                }
+
                 else -> false
             }
 
@@ -203,8 +209,15 @@ class HomeActivity : AppCompatActivity() {
                 )
 
             } catch (e : Exception){
-
+                Toast.makeText(this@HomeActivity, "Error al cerrar sesión", Toast.LENGTH_SHORT).show()
             }
+
+            val intent = Intent(this@HomeActivity, MainActivity::class.java)
+
+            //Configurar el Intent para que inicie la app desde cero
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+
+            startActivity(intent)
         }
     }
 }

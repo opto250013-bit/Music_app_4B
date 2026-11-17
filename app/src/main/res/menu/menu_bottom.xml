@@ -11,5 +11,6 @@
         android:title="Favoritos"/>
 
     <item android:id="@+id/nav_salir"
-        android:icon="@drawable/salir"/>
+        android:icon="@drawable/salir"
+        android:title="Salir"/>
 </menu>
