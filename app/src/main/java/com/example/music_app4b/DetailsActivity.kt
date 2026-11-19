@@ -1,5 +1,9 @@
 package com.example.music_app4b
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -7,12 +11,21 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.bumptech.glide.Glide
 import org.w3c.dom.Text
 
 class DetailsActivity : AppCompatActivity() {
+    //para las notificaciones
+    companion object{
+        private const val CANAL_ID = "canal_general"
+        private const val NOTIFICACION_ID = 1
+        private const val CODIGO_PERMISO = 100
+    }
 
     private lateinit var imgPortadaDetalle : ImageView
     private lateinit var btnFavorito : ImageButton
@@ -110,6 +123,53 @@ class DetailsActivity : AppCompatActivity() {
             }
 
         }
+
+    }
+
+    //METODO PARA CREAR CANAL DE NOTIFICACIONES
+    private fun crearCanalNoti(){
+
+        //Evaluar el permiso del usuario para manejar notificaciones
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+
+            val canal = NotificationChannel(
+                CANAL_ID,
+                "Notificaciones generales",
+                NotificationManager.IMPORTANCE_DEFAULT
+            )
+
+            canal.description = "Canal de enío de notificaciones sobre la BD"
+
+            //Indicar el uso de notificaciones
+            val adminNotificaciones = getSystemService(NotificationManager::class.java)
+
+            adminNotificaciones.createNotificationChannel(canal)
+        }
+    }
+
+    //METODO PARA MOSTRAR LA NOTIFICCION
+    private fun mostrarNoti(){
+
+        //VERIFICAR LOS PERMISOS SELECCIONADOS POR EL USUARIO
+        //Si el usuario no ha dado ermiso de enviar notificaciones
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && ContextCompat.checkSelfPermission(
+            this, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED
+        ){
+
+            //Volver a pedir permiso al usuario
+            ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.POST_NOTIFICATIONS), CODIGO_PERMISO)
+            Toast.makeText(this, "Autoriza el envio de notificaciones", Toast.LENGTH_SHORT).show()
+
+            return
+        }
+
+        val notificacion = NotificationCompat.Builder(this, CANAL_ID)
+            .setSmallIcon(R.drawable.baseline_email_24)
+            .setContentTitle("Music-App")
+            .setContentText("Un album fue añadido a la base de datos")
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setAutoCancel(true)
+            .build()
 
     }
 
