@@ -134,17 +134,17 @@ class FavoritesActivity : AppCompatActivity() {
                 val intent = Intent(this, DetailsActivity::class.java)
 
                 intent.putExtra("ID_ALBUM", album.albumId)
-                intent.putExtra("NOMBRE_ALBUM", album.albumId)
-                intent.putExtra("ARTISTA_ALBUM", album.albumId)
-                intent.putExtra("GENERO_ALBUM", album.albumId)
-                intent.putExtra("CANCIONES_ALBUM", album.albumId)
-                intent.putExtra("FECHA_ALBUM", album.albumId)
-                intent.putExtra("IMAGEN_ALBUM", album.albumId)
+                intent.putExtra("NOMBRE_ALBUM", album.nombreAlbum)
+                intent.putExtra("ARTISTA_ALBUM", album.artista)
+                intent.putExtra("GENERO_ALBUM", album.genero)
+                intent.putExtra("CANCIONES_ALBUM", album.canciones)
+                intent.putExtra("FECHA_ALBUM", album.fecha)
+                intent.putExtra("IMAGEN_ALBUM", album.imagen)
 
                 startActivity(intent)
             }
 
-            gridFavoritos
+            gridFavoritos.addView(vistaAlbum)
 
         }
 
@@ -166,6 +166,5 @@ class FavoritesActivity : AppCompatActivity() {
             tvEstadoFavoritos.visibility = View.GONE
             mostrarAlbumesFavoritos(favoritos)
         }
-
     }
 }
