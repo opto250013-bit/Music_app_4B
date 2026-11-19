@@ -23,8 +23,10 @@ class FavoritesActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        setContentView(R.layout.activity_favorites)
 
-        bottomNavigation = findViewById(R.id.bottomNavigation)
+
+        bottomNavigation = findViewById(R.id.bottomNavigation) // segun esta qui el error
         auth = FirebaseAuth.getInstance()
         credentialManager = CredentialManager.create(this)
 
@@ -35,14 +37,14 @@ class FavoritesActivity : AppCompatActivity() {
     private fun menuNavegacion(){
 
         //Verificar la opcion seleccionada del menu
-        bottomNavigation.selectedItemId = R.id.nav_inicio
+        bottomNavigation.selectedItemId = R.id.nav_favoritos
 
         bottomNavigation.setOnItemSelectedListener { item ->
 
             when(item.itemId){
 
                 R.id.nav_inicio -> {
-                    val intent = Intent(this, MainActivity::class.java)
+                    val intent = Intent(this, HomeActivity::class.java)
                     startActivity(intent)
                     true
                 }

@@ -195,6 +195,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(
 
     }
 
+    //METODO PARA LA CONSULTA DE ALBUMES FAVORITOS
     fun obtenerAlbumesFavoritos(): List<albumFvorito>{
         val listaFavoritos = mutableListOf<albumFvorito>()
         val db = readableDatabase
@@ -231,7 +232,8 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(
             }while (cursor.moveToNext())
 
             cursor.close()
-            return  listaFavoritos
+
         }
+        return  listaFavoritos
     }
 }
